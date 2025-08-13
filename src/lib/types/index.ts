@@ -35,3 +35,15 @@ export interface Story {
     images: StoryImage[];
     ogImage?: string; // open graph image url
 }
+
+export interface SEOProps {
+  fullTitle: string;
+  description: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+  jsonLd?: Record<string, unknown>;
+}
+
+export interface Storygallery {
+    images: StoryImage[];
+}
