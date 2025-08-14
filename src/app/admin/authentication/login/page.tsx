@@ -1,20 +1,21 @@
 "use client";
 
 import AuthForm from "@/components/AuthForm";
+import { auth } from "@/lib/firebase/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
-    const handleLogin = async (values: any) => {
-        const res = await fetch("/api/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(values),
-        });
+    const router = useRouter()
 
-        const data = await res.json();
-        if (!res.ok) {
-            alert(data.error);
-        } else {
-            console.log("Logged in:", data);
+    const handleLogin = async (values: { email: string; password: string }) => {
+        try {
+            await signInWithEmailAndPassword(auth, values.email, values.password);
+            toast.success("Login Successful!!!");
+            router.push("/admin");
+        } catch (err: any) {
+            toast.error(err.message || "Failed to login");
         }
     };
 

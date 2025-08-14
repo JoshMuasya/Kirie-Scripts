@@ -27,13 +27,11 @@ export interface Story {
     title: string;
     slug: string;
     excerpt: string;
-    content: string; // markdown
-    author: Author;
+    content: string;
     publishedAt: string; // ISO
     tags: string[];
     featured?: boolean;
-    images: StoryImage[];
-    ogImage?: string; // open graph image url
+    themeImage: string;
 }
 
 export interface SEOProps {

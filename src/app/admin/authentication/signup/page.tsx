@@ -1,8 +1,12 @@
 "use client";
 
 import AuthForm from "@/components/AuthForm";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function SignupPage() {
+  const router = useRouter()
+
   const handleSignup = async (values: any) => {
     const res = await fetch("/api/signup", {
       method: "POST",
@@ -12,9 +16,10 @@ export default function SignupPage() {
 
     const data = await res.json();
     if (!res.ok) {
-      alert(data.error);
+      toast.error("Failed!!! Try Again!!!");
     } else {
-      console.log("Signed Up:", data)
+      toast.success("Sign Up Successful");
+      router.push("/admin/authentication/login")
     }
   };
 

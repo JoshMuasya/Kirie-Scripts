@@ -7,20 +7,43 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { sampleStories } from "@/lib/SampleStories";
 import SEO from "@/components/SEO/SEO";
-import StoryGallery from "@/components/Stories/StoryGallery";
 import { Story } from "@/lib/types";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import Image from "next/image";
+import toast from "react-hot-toast";
 
 export default function StoryDetailPage() {
   const { slug } = useParams();
   const router = useRouter();
   const [story, setStory] = useState<Story | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchStory = async () => {
+    try {
+      const res = await fetch(`/api/stories/${slug}`, {
+        cache: "no-store"
+      })
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch story");
+      }
+
+      const data = await res.json();
+
+      setStory(data)
+
+    } catch (error) {
+      console.error("Fetch error:", error);
+      toast.error("Failed to fetch stories");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-  const foundStory = sampleStories.find((s) => s.slug === slug) || null;
-  setStory(foundStory);
-}, [slug]);
+    fetchStory()
+  }, [slug]);
 
   if (!story) {
     return (
@@ -58,14 +81,12 @@ export default function StoryDetailPage() {
       <SEO
         fullTitle={story.title}
         description={story.excerpt}
-        ogImage={story.ogImage}
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Article",
           headline: story.title,
           description: story.excerpt,
-          image: story.ogImage || story.images[0]?.url,
-          author: { "@type": "Person", name: story.author.name },
+          image: story.themeImage,
           datePublished: story.publishedAt,
         }}
       />
@@ -80,8 +101,6 @@ export default function StoryDetailPage() {
             <time dateTime={story.publishedAt}>
               {new Date(story.publishedAt).toLocaleDateString()}
             </time>
-            <span>•</span>
-            <span>By {story.author.name}</span>
           </div>
           <h1 className="mt-2 text-3xl md:text-4xl font-semibold tracking-tight">
             {story.title}
@@ -107,7 +126,23 @@ export default function StoryDetailPage() {
           </div>
         </motion.header>
 
-        <StoryGallery images={story.images} />
+        {story.themeImage ? (
+          <Image
+            src={story.themeImage}
+            alt={story.title}
+            width={400}
+            height={200}
+            className="rounded-t-lg object-cover"
+            onError={(e) => {
+              console.error(`Failed to load image for ${story.title}: ${story.themeImage}`);
+              e.currentTarget.style.display = "none";
+            }}
+          />
+        ) : (
+          <div className="w-full h-[200px] bg-gray-200 flex items-center justify-center rounded-t-lg">
+            <p className="text-gray-500">No image available</p>
+          </div>
+        )}
 
         <motion.section
           className="mt-8 space-y-4 leading-relaxed"
