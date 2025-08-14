@@ -3,6 +3,10 @@ import { adminAuth, adminFirestore, storage, timeStamp } from "@/lib/firebase/fi
 import { deleteDoc, doc } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
+type Params = {
+  params: { slug: string }
+}
+
 // Function to generate slug from title
 const generateSlug = (title: string) => {
   return title
@@ -47,10 +51,10 @@ export async function DELETE(request: Request, { params }: { params: { slug: str
 // GET: Get specific Story
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  context:Params
 ) {
   try {
-    const { slug } = params;
+    const { slug } = context.params;
 
     if (!slug) {
       return NextResponse.json(
