@@ -77,7 +77,7 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
 
     // Convert publishedAt to ISO string if it exists
     const publishedAt =
-      data.publishedAt?.toDate?.()
+      data.publishedAt?.toDate()
         ? data.publishedAt.toDate().toISOString()
         : null;
 
