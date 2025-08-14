@@ -45,9 +45,12 @@ export async function DELETE(request: Request, { params }: { params: { slug: str
 }
 
 // GET: Get specific Story
-export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
+export async function GET(
+  request: NextRequest,
+  context: { params: { slug: string } }
+) {
   try {
-    const { slug } = await params;
+    const { slug } = context.params;
 
     if (!slug) {
       return NextResponse.json(
