@@ -20,7 +20,6 @@ const page = () => {
       const data = await res.json()
       setStories(data)
     } catch (error) {
-      console.error("Fetch error:", error);
       toast.error("Failed to fetch stories");
     } finally {
       setLoading(false);
@@ -30,8 +29,6 @@ const page = () => {
   useEffect(() => {
     fetchStories()
   }, [])
-
-  console.log("Stories", stories)
 
   return (
     <main className="min-h-screen bg-background">

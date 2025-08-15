@@ -1,6 +1,7 @@
 "use client";
 
 import AuthForm from "@/components/AuthForm";
+import toast from "react-hot-toast";
 
 export default function ResetPasswordPage() {
     const handleReset = async (values: any) => {
@@ -12,9 +13,9 @@ export default function ResetPasswordPage() {
 
         const data = await res.json();
         if (!res.ok) {
-            alert(data.error);
+            toast.error("Failed to Reset. Try Again");
         } else {
-            console.log("Rest Link Sent:", data);
+            toast.success("Rest Link Sent");
         }
     };
 

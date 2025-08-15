@@ -33,7 +33,7 @@ export async function DELETE(request: Request) {
     )
   }
 
-  const idToken = authHeader.split("Bearer")[1]
+  const idToken = authHeader.replace("Bearer ", "").trim();
 
   try {
     await adminAuth.verifyIdToken(idToken)
@@ -43,7 +43,6 @@ export async function DELETE(request: Request) {
 
     return NextResponse.json({ message: "Story deleted" }, { status: 200 });
   } catch (error) {
-    console.error("Error deleting story:", error);
     return NextResponse.json(
       { error: "Failed to delete story" },
       { status: 500 }
@@ -74,8 +73,6 @@ export async function GET(
       .limit(1)
       .get();
 
-    console.log("snapshot", querySnapshot)
-
     if (querySnapshot.empty) {
       return NextResponse.json(
         { error: "Story not found" },
@@ -98,7 +95,6 @@ export async function GET(
       publishedAt,
     });
   } catch (error) {
-    console.error("Error fetching story:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
@@ -214,7 +210,6 @@ export async function PUT(
       publishedAt: updatedData?.publishedAt?.toDate?.()?.toISOString() ?? null,
     });
   } catch (error) {
-    console.error("Error updating story:", error);
     return NextResponse.json({ error: "Failed to update story" }, { status: 500 });
   }
 }

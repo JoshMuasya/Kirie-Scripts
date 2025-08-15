@@ -45,10 +45,8 @@ export function AdminDashboard() {
             const res = await fetch("/api/stories/get");
             if (!res.ok) throw new Error("Failed to fetch stories");
             const data = await res.json();
-            console.log("Fetched stories:", data); // Debug: Log fetched data
             setStories(data);
         } catch (error) {
-            console.error("Fetch error:", error);
             toast.error("Failed to fetch stories");
         } finally {
             setLoading(false);
@@ -92,7 +90,6 @@ export function AdminDashboard() {
                 return;
             }
 
-
             const token = await auth.currentUser?.getIdToken()
 
             const res = await fetch("/api/stories/add", {
@@ -116,7 +113,6 @@ export function AdminDashboard() {
             setImageFile(null);
             fetchStories();
         } catch (error) {
-            console.error("Save error:", error);
             toast.error("Error saving story");
         }
     };
@@ -182,7 +178,6 @@ export function AdminDashboard() {
             setImageFile(null);
             fetchStories();
         } catch (error) {
-            console.error("Update error:", error);
             toast.error("Error updating story");
         }
     };
@@ -211,7 +206,6 @@ export function AdminDashboard() {
             toast.success("Story deleted!");
             fetchStories();
         } catch (error) {
-            console.error("Delete error:", error);
             toast.error("Error deleting story");
         }
     };
@@ -304,7 +298,6 @@ export function AdminDashboard() {
                                         height={200}
                                         className="rounded-t-lg object-cover"
                                         onError={(e) => {
-                                            console.error(`Failed to load image for ${story.title}: ${story.themeImage}`);
                                             e.currentTarget.style.display = "none";
                                         }}
                                     />

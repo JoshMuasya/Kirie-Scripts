@@ -8,7 +8,6 @@ export async function POST(req: Request) {
         await deleteDoc(doc(db, "stories", id));
         return NextResponse.json({ success: true });
     } catch (error) {
-        console.error("Error deleting story:", error);
         return NextResponse.json({ error: "Failed to delete story" }, { status: 500 });
     }
 }

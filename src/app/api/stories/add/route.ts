@@ -14,7 +14,7 @@ export async function POST(req: Request) {
         )
     }
 
-    const idToken = authHeader.split("Bearer")[1]
+    const idToken = authHeader.replace("Bearer ", "").trim();
 
     try {
         await adminAuth.verifyIdToken(idToken)
@@ -61,7 +61,6 @@ export async function POST(req: Request) {
 
         return NextResponse.json({ id: storyRef.id, success: true });
     } catch (error) {
-        console.error("Error adding story:", error);
         return NextResponse.json({ error: "Failed to add story" }, { status: 500 });
     }
 }

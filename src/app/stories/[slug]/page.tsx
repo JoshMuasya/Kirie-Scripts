@@ -33,7 +33,6 @@ export default function StoryDetailPage() {
       setStory(data)
 
     } catch (error) {
-      console.error("Fetch error:", error);
       toast.error("Failed to fetch stories");
     } finally {
       setLoading(false);
@@ -133,7 +132,6 @@ export default function StoryDetailPage() {
             height={200}
             className="rounded-t-lg object-cover"
             onError={(e) => {
-              console.error(`Failed to load image for ${story.title}: ${story.themeImage}`);
               e.currentTarget.style.display = "none";
             }}
           />

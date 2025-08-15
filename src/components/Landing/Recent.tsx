@@ -19,7 +19,6 @@ const Recent = () => {
             const data = await res.json()
             setRecent(data)
         } catch (error) {
-            console.error("Fetch error:", error);
             toast.error("Failed to fetch stories")
         } finally {
             setLoading(false)

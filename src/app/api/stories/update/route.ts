@@ -44,7 +44,6 @@ export async function POST(req: Request) {
 
         return NextResponse.json({ success: true });
     } catch (error) {
-        console.error("Error updating story:", error);
         return NextResponse.json({ error: "Failed to update story" }, { status: 500 });
     }
 }
