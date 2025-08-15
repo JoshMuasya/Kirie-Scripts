@@ -50,11 +50,12 @@ export async function DELETE(request: Request, { params }: { params: { slug: str
 
 // GET: Get specific Story
 export async function GET(
-  request: NextRequest,
-  { params }: { params: { slug: string } }
+  request: NextRequest
 ) {
   try {
-    const { slug } = params;
+    const url = new URL(request.url);
+    const segments = url.pathname.split("/").filter(Boolean);
+    const slug = segments[segments.length - 1];
 
     if (!slug) {
       return NextResponse.json(
