@@ -177,24 +177,22 @@ export async function PUT(
     };
 
     if (themeImage) {
+      console.log("Uploading themeImage:", themeImage.name, themeImage.type);
       const bucket = storage.bucket();
       const fileName = `stories/${Date.now()}-${themeImage.name}`;
       const file = bucket.file(fileName);
 
-      // Convert to buffer
       const arrayBuffer = await themeImage.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
-      // Upload to storage
       await file.save(buffer, {
         contentType: themeImage.type,
         public: true,
       });
 
-      // Make public & get URL
       await file.makePublic();
       const imageUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
-
+      console.log("Image uploaded successfully:", imageUrl);
       updateData.themeImage = imageUrl;
     }
 
@@ -210,6 +208,7 @@ export async function PUT(
       publishedAt: updatedData?.publishedAt?.toDate?.()?.toISOString() ?? null,
     });
   } catch (error) {
+    console.error("Error updating story:", error);
     return NextResponse.json({ error: "Failed to update story" }, { status: 500 });
   }
 }
