@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { sampleStories } from "@/lib/SampleStories";
 import SEO from "@/components/SEO/SEO";
 import { Story } from "@/lib/types";
 import ReactMarkdown from "react-markdown";

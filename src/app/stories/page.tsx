@@ -2,7 +2,6 @@
 
 import SEO from '@/components/SEO/SEO'
 import StoryList from '@/components/Stories/StoryList'
-import { sampleStories } from '@/lib/SampleStories'
 import { Story } from '@/lib/types'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'

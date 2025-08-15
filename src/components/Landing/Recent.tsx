@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react'
 import StoryList from '../Stories/StoryList'
-import { sampleStories } from '@/lib/SampleStories';
 import { Story } from '@/lib/types';
 import toast from 'react-hot-toast';
 
