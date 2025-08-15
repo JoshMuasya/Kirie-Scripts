@@ -51,10 +51,10 @@ export async function DELETE(request: Request, { params }: { params: { slug: str
 // GET: Get specific Story
 export async function GET(
   request: NextRequest,
-  context:Params
+  { params }: { params: { slug: string } }
 ) {
   try {
-    const { slug } = context.params;
+    const { slug } = params;
 
     if (!slug) {
       return NextResponse.json(
