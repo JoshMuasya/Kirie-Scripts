@@ -35,7 +35,7 @@ const Footer = () => {
                     <p className=''>
                         Developed by{' '}
                         <a
-                            href="https://yourportfolio.com"
+                            href="https://digimatic2-0.vercel.app/"
                             className="hover:text-purple-500 transition-colors"
                             target="_blank"
                             rel="noopener noreferrer"
