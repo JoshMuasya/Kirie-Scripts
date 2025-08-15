@@ -50,8 +50,8 @@ export async function DELETE(request: Request, { params }: { params: { slug: str
 
 // GET: Get specific Story
 export async function GET(
-  { params }: { params: { slug: string } },
-  request: NextRequest
+  request: NextRequest,
+  { params }: { params: { slug: string } }
 ) {
   try {
     const { slug } = params;
