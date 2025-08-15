@@ -19,7 +19,11 @@ const generateSlug = (title: string) => {
 };
 
 // DELETE: Delete a story
-export async function DELETE(request: Request, { params }: { params: { slug: string } }) {
+export async function DELETE(request: Request) {
+  const url = new URL(request.url);
+  const segments = url.pathname.split("/").filter(Boolean);
+  const slug = segments[segments.length - 1];
+
   const authHeader = request.headers.get("Authorization");
 
   if (!authHeader?.startsWith("Bearer")) {
@@ -34,7 +38,6 @@ export async function DELETE(request: Request, { params }: { params: { slug: str
   try {
     await adminAuth.verifyIdToken(idToken)
 
-    const { slug } = params;
     const storyRef = doc(db, "stories", slug);
     await deleteDoc(storyRef);
 
